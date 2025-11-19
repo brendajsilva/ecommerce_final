@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho | TechStore</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">⚡ TechStore</div>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="produtos.html">Produtos</a>
+      <a href="quemsomos.html">Quem Somos</a>
+      <a href="contato.html">Contato</a>
+      <a href="perfil.html">Perfil</a>
+      <a href="suporte.html">Suporte</a>
+      <button class="btn-logout" onclick="logout()">Sair</button>
+    </nav>
+  </header>
+
+  <main class="carrinho-container fade-in">
+    <h2>🛒 Meu Carrinho</h2>
+    <ul id="lista-carrinho"></ul>
+    <p class="total">Total: R$ <span id="total-carrinho">0.00</span></p>
+
+    <div class="endereco-section">
+      <h3>📍 Endereço de Entrega</h3>
+      <div id="endereco-selecionado" class="endereco-selecionado">
+        <p>Nenhum endereço selecionado</p>
+        <button class="btn-secondary" onclick="abrirModalEnderecos()">Selecionar Endereço</button>
+      </div>
+    </div>
+
+    <div class="carrinho-actions">
+      <button class="btn-primary" onclick="finalizarCompra()">Finalizar Compra</button>
+      <button class="btn-danger" onclick="esvaziarCarrinho()">Esvaziar Carrinho</button>
+    </div>
+  </main>
+
+  <!-- Modal para seleção de endereço -->
+  <div id="modal-enderecos" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModalEnderecos()">&times;</span>
+      <h3>Selecionar Endereço de Entrega</h3>
+
+      <div id="lista-enderecos" class="lista-enderecos">
+        <!-- Endereços serão carregados aqui -->
+      </div>
+
+      <button class="btn-secondary" onclick="abrirModalNovoEndereco()">Adicionar Novo Endereço</button>
+    </div>
+  </div>
+
+  <!-- Modal para novo endereço -->
+  <div id="modal-novo-endereco" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModalNovoEndereco()">&times;</span>
+      <h3>Adicionar Novo Endereço</h3>
+
+      <form id="form-novo-endereco" class="endereco-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cep">CEP *</label>
+            <input type="text" id="cep" name="cep" placeholder="00000-000" required>
+            <button type="button" class="btn-small" onclick="buscarCEP()">Buscar</button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="logradouro">Logradouro *</label>
+            <input type="text" id="logradouro" name="logradouro" required>
+          </div>
+          <div class="form-group">
+            <label for="numero">Número *</label>
+            <input type="text" id="numero" name="numero" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="complemento">Complemento</label>
+          <input type="text" id="complemento" name="complemento">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="bairro">Bairro *</label>
+            <input type="text" id="bairro" name="bairro" required>
+          </div>
+          <div class="form-group">
+            <label for="localidade">Cidade *</label>
+            <input type="text" id="localidade" name="localidade" required>
+          </div>
+          <div class="form-group">
+            <label for="uf">UF *</label>
+            <input type="text" id="uf" name="uf" maxlength="2" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="apelido">Apelido (opcional)</label>
+          <input type="text" id="apelido" name="apelido" placeholder="Ex: Casa, Trabalho">
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="is_principal" name="is_principal"> Definir como endereço principal
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary">Salvar Endereço</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para seleção de método de pagamento -->
+  <div id="modal-pagamento" class="modal" style="display: none;">
+    <div class="modal-content payment-modal">
+      <span class="close" onclick="fecharModalPagamento()">&times;</span>
+      <div class="modal-header">
+        <h3>💳 Selecione o Método de Pagamento</h3>
+        <p>Escolha como deseja pagar sua compra</p>
+      </div>
+
+      <div class="payment-methods-grid">
+        <label class="payment-card">
+          <input type="radio" name="metodo-pagamento-modal" value="CARTAO_CREDITO" checked>
+          <div class="payment-card-content">
+            <div class="payment-icon-large">💳</div>
+            <div class="payment-info">
+              <h4>Cartão de Crédito</h4>
+              <p>Pague em até 12x sem juros</p>
+            </div>
+            <div class="payment-check">✓</div>
+          </div>
+        </label>
+
+        <label class="payment-card">
+          <input type="radio" name="metodo-pagamento-modal" value="PIX">
+          <div class="payment-card-content">
+            <div class="payment-icon-large">📱</div>
+            <div class="payment-info">
+              <h4>PIX</h4>
+              <p>Pagamento instantâneo</p>
+            </div>
+            <div class="payment-check">✓</div>
+          </div>
+        </label>
+
+        <label class="payment-card">
+          <input type="radio" name="metodo-pagamento-modal" value="BOLETO">
+          <div class="payment-card-content">
+            <div class="payment-icon-large">📄</div>
+            <div class="payment-info">
+              <h4>Boleto Bancário</h4>
+              <p>Vencimento em 3 dias</p>
+            </div>
+            <div class="payment-check">✓</div>
+          </div>
+        </label>
+
+        <label class="payment-card">
+          <input type="radio" name="metodo-pagamento-modal" value="DEBITO_ONLINE">
+          <div class="payment-card-content">
+            <div class="payment-icon-large">🏦</div>
+            <div class="payment-info">
+              <h4>Débito Online</h4>
+              <p>Direto na sua conta</p>
+            </div>
+            <div class="payment-check">✓</div>
+          </div>
+        </label>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="fecharModalPagamento()">Cancelar</button>
+        <button type="button" class="btn-primary" onclick="confirmarMetodoPagamento()">Continuar para Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

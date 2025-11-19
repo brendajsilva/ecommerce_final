@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | TechStore</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">⚡ TechStore</div>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="produtos.html">Produtos</a>
+      <a href="quemsomos.html">Quem Somos</a>
+      <a href="contato.html">Contato</a>
+      <a href="perfil.html">Perfil</a>
+      <button class="btn-logout" onclick="logout()">Sair</button>
+    </nav>
+  </header>
+
+  <main class="checkout-container">
+    <div class="checkout-left">
+      <!-- Header -->
+      <div class="checkout-header">
+        <h1>💳 Finalizar Compra</h1>
+        <p>Complete seu pedido de forma segura</p>
+      </div>
+
+      <!-- Itens do Carrinho -->
+      <div class="checkout-section">
+        <h3>🛒 Itens do Pedido</h3>
+        <div id="itens-carrinho" class="cart-items">
+          <!-- Itens serão carregados aqui -->
+        </div>
+      </div>
+
+      <!-- Endereço de Entrega -->
+      <div class="checkout-section">
+        <h3>📍 Endereço de Entrega</h3>
+        <div id="endereco-selecionado" class="address-display">
+          <!-- Endereço será carregado aqui -->
+        </div>
+      </div>
+
+      <!-- Método de Pagamento -->
+      <div class="checkout-section">
+        <h3>💳 Forma de Pagamento</h3>
+        <div class="payment-methods">
+          <label class="payment-card">
+            <input type="radio" name="metodo-pagamento" value="CARTAO_CREDITO" checked>
+            <div class="payment-card-content">
+              <div class="payment-icon-large">💳</div>
+              <div class="payment-info">
+                <h4>Cartão de Crédito</h4>
+                <p>Até 12x sem juros</p>
+              </div>
+              <div class="payment-check">✓</div>
+            </div>
+          </label>
+
+          <label class="payment-card">
+            <input type="radio" name="metodo-pagamento" value="PIX">
+            <div class="payment-card-content">
+              <div class="payment-icon-large">📱</div>
+              <div class="payment-info">
+                <h4>PIX</h4>
+                <p>Pagamento instantâneo</p>
+              </div>
+              <div class="payment-check">✓</div>
+            </div>
+          </label>
+
+          <label class="payment-card">
+            <input type="radio" name="metodo-pagamento" value="BOLETO">
+            <div class="payment-card-content">
+              <div class="payment-icon-large">📄</div>
+              <div class="payment-info">
+                <h4>Boleto Bancário</h4>
+                <p>Prazo de 3 dias úteis</p>
+              </div>
+              <div class="payment-check">✓</div>
+            </div>
+          </label>
+        </div>
+
+        <!-- Formulário do Cartão -->
+        <div id="cartao-form" class="card-form">
+          <h4>💳 Dados do Cartão</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nome-cartao">Nome no Cartão *</label>
+              <input type="text" id="nome-cartao" placeholder="Como está no cartão" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="numero-cartao">Número do Cartão *</label>
+              <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="validade-cartao">Validade *</label>
+              <input type="text" id="validade-cartao" placeholder="MM/AA" required>
+            </div>
+            <div class="form-group">
+              <label for="cvv-cartao">CVV *</label>
+              <input type="text" id="cvv-cartao" placeholder="000" required>
+            </div>
+          </div>
+          <div id="cartao-erros" class="form-errors"></div>
+        </div>
+
+        <!-- PIX Info -->
+        <div id="pix-info" class="payment-info" style="display: none;">
+          <h4>📱 Pagamento via PIX</h4>
+          <div class="pix-waiting">
+            <p>O código PIX será gerado após a confirmação do pedido.</p>
+            <div class="pix-notice">
+              <strong>⚡ Vantagens:</strong>
+              <ul>
+                <li>Pagamento instantâneo</li>
+                <li>Disponível 24/7</li>
+                <li>Taxas reduzidas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boleto Info -->
+        <div id="boleto-info" class="payment-info" style="display: none;">
+          <h4>📄 Pagamento via Boleto</h4>
+          <div class="boleto-waiting">
+            <p>O boleto será gerado após a confirmação do pedido.</p>
+            <div class="boleto-notice">
+              <strong>📅 Prazo:</strong> O boleto tem vencimento de 3 dias úteis.<br>
+              <strong>⚠️ Importante:</strong> O pedido será processado apenas após a confirmação do pagamento.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cupom de Desconto -->
+      <div class="checkout-section">
+        <h3>🎫 Cupom de Desconto</h3>
+        <div class="coupon-section">
+          <div class="coupon-input-group">
+            <input type="text" id="cupom-codigo" placeholder="Digite o código do cupom">
+            <button type="button" class="btn-secondary" onclick="aplicarCupom()">Aplicar</button>
+          </div>
+          <div id="cupom-status" class="coupon-status"></div>
+          <div id="cupom-info" class="coupon-info" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-right">
+      <!-- Resumo do Pedido -->
+      <div class="checkout-summary">
+        <h3>📋 Resumo da Compra</h3>
+
+        <div class="summary-items">
+          <div class="summary-line">
+            <span>Subtotal:</span>
+            <span>R$ <span id="subtotal">0.00</span></span>
+          </div>
+          <div class="summary-line">
+            <span>Frete:</span>
+            <span>R$ <span id="frete">0.00</span></span>
+          </div>
+          <div class="summary-line discount-line" id="desconto-line" style="display: none;">
+            <span>Desconto:</span>
+            <span>-R$ <span id="desconto">0.00</span></span>
+          </div>
+          <div class="summary-line total-line">
+            <span><strong>Total:</strong></span>
+            <span><strong>R$ <span id="total-final">0.00</span></strong></span>
+          </div>
+        </div>
+
+        <button type="button" id="btn-finalizar" class="btn-primary btn-large" onclick="finalizarPedido()">
+          <span id="btn-text">💳 Finalizar Compra</span>
+          <span id="btn-loading" style="display: none;">⏳ Processando...</span>
+        </button>
+
+        <a href="carrinho.html" class="btn-outline">← Voltar ao Carrinho</a>
+      </div>
+
+      <!-- Segurança -->
+      <div class="checkout-security">
+        <div class="security-item">
+          <span class="security-icon">🔒</span>
+          <span>Pagamento Seguro</span>
+        </div>
+        <div class="security-item">
+          <span class="security-icon">🛡️</span>
+          <span>Dados Protegidos</span>
+        </div>
+        <div class="security-item">
+          <span class="security-icon">🚚</span>
+          <span>Entrega Garantida</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de Endereços -->
+  <div id="modal-enderecos" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModalEnderecos()">&times;</span>
+      <h3>Selecionar Endereço</h3>
+      <div id="lista-enderecos" class="lista-enderecos"></div>
+      <button type="button" class="btn-secondary" onclick="abrirModalNovoEndereco()">+ Novo Endereço</button>
+    </div>
+  </div>
+
+  <!-- Modal Novo Endereço -->
+  <div id="modal-novo-endereco" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModalNovoEndereco()">&times;</span>
+      <h3>Adicionar Endereço</h3>
+      <form id="form-novo-endereco" class="endereco-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cep">CEP *</label>
+            <input type="text" id="cep" required onblur="buscarCEP()">
+          </div>
+          <div class="form-group">
+            <label for="apelido">Apelido</label>
+            <input type="text" id="apelido" placeholder="Casa, Trabalho...">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="logradouro">Rua *</label>
+            <input type="text" id="logradouro" required>
+          </div>
+          <div class="form-group">
+            <label for="numero">Número *</label>
+            <input type="text" id="numero" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento">
+          </div>
+          <div class="form-group">
+            <label for="bairro">Bairro *</label>
+            <input type="text" id="bairro" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="localidade">Cidade *</label>
+            <input type="text" id="localidade" required>
+          </div>
+          <div class="form-group">
+            <label for="uf">Estado *</label>
+            <input type="text" id="uf" required maxlength="2">
+          </div>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="is_principal">
+          <label for="is_principal">Endereço principal</label>
+        </div>
+        <button type="submit" class="btn-primary">Salvar</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

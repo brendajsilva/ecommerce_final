@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | TechStore</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+  <div class="login-container">
+    <!-- Lado Esquerdo -->
+    <div class="login-left">
+      <h1>👋 Bem-vindo de volta!</h1>
+      <p>Para continuar conectado, entre com suas credenciais</p>
+      <form onsubmit="login(event)" class="form-login">
+        <input type="text" id="usuario" placeholder="Usuário" required>
+        <div class="senha-box">
+          <input type="password" id="senha" placeholder="Senha" required>
+          <span class="toggle-senha" onclick="toggleSenha('senha')">👁</span>
+        </div>
+        <button type="submit" class="btn-primary">Entrar</button>
+      </form>
+    </div>
+
+    <!-- Lado Direito -->
+    <div class="login-right">
+      <h1>🚀 Criar Conta</h1>
+      <p>Use seu e-mail para se registrar</p>
+      <form onsubmit="cadastrarAPI(event)" class="form-cadastro">
+        <input type="text" id="novoUsername" placeholder="Username" required>
+        <input type="text" id="novoNomeCompleto" placeholder="Nome Completo" required>
+        <input type="email" id="novoEmail" placeholder="Email" required>
+        <input type="tel" id="novoTelefone" placeholder="Telefone (opcional)">
+        <input type="text" id="novoCPF" placeholder="CPF (opcional)" oninput="formatarCPF(this)">
+        <div class="senha-box">
+          <input type="password" id="novaSenha" placeholder="Senha" required>
+          <span class="toggle-senha" onclick="toggleSenha('novaSenha')">👁</span>
+        </div>
+        <button type="submit" class="btn-secondary">Cadastrar-se</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

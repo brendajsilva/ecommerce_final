@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil | TechStore</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --glass-bg: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.15);
+      --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.2);
+      --border-radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--primary-gradient);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .profile-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .profile-container {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 2rem;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Sidebar */
+    .profile-sidebar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-medium);
+      position: sticky;
+      top: 2rem;
+      height: fit-content;
+    }
+
+    .profile-avatar {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .avatar-circle {
+      width: 120px;
+      height: 120px;
+      background: var(--primary-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      box-shadow: var(--shadow-medium);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar-circle::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: var(--primary-gradient);
+      border-radius: 50%;
+      z-index: -1;
+      animation: rotate 3s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .avatar-icon {
+      font-size: 3.5rem;
+      color: white;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    .avatar-edit {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: var(--secondary-gradient);
+      border: 3px solid white;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-light);
+    }
+
+    .avatar-edit:hover {
+      transform: scale(1.1);
+    }
+
+    .profile-info h2 {
+      color: #2d3748;
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .profile-info p {
+      color: #718096;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-light);
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: #718096;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .profile-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #4a5568;
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--primary-gradient);
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .nav-item:hover::before,
+    .nav-item.active::before {
+      left: 0;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      color: white;
+      transform: translateX(4px);
+      box-shadow: var(--shadow-light);
+    }
+
+    .nav-icon {
+      margin-right: 1rem;
+      font-size: 1.25rem;
+      width: 24px;
+      text-align: center;
+    }
+
+    .nav-text {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    /* Main Content */
+    .profile-content {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-medium);
+      min-height: 600px;
+    }
+
+    .content-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid rgba(0,0,0,0.1);
+    }
+
+    .content-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #1a202c;
+      margin: 0 0 0.5rem 0;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .content-subtitle {
+      color: #718096;
+      font-size: 1.1rem;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .profile-section {
+      display: none;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    .profile-section.active {
+      display: block;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Cards */
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .data-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: var(--shadow-light);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .data-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .data-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .data-card-icon.user { background: var(--primary-gradient); color: white; }
+    .data-card-icon.email { background: var(--success-gradient); color: white; }
+    .data-card-icon.phone { background: var(--secondary-gradient); color: white; }
+    .data-card-icon.security { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: white; }
+
+    .data-card-title {
+      font-size: 0.9rem;
+      color: #718096;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .data-card-value {
+      font-size: 1.1rem;
+      color: #2d3748;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    /* Orders */
+    .orders-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .order-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--shadow-light);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .order-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+
+    .order-id {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin: 0;
+    }
+
+    .order-date {
+      color: #718096;
+      font-size: 0.9rem;
+      margin: 0.25rem 0 0 0;
+    }
+
+    .order-status {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-pending { background: #fef3c7; color: #d97706; }
+    .status-processing { background: #dbeafe; color: #2563eb; }
+    .status-shipped { background: #d1fae5; color: #065f46; }
+    .status-delivered { background: #d1fae5; color: #065f46; }
+    .status-cancelled { background: #fee2e2; color: #dc2626; }
+
+    .order-items {
+      margin-bottom: 1.5rem;
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #f7fafc;
+    }
+
+    .order-item:last-child {
+      border-bottom: none;
+    }
+
+    .item-info h4 {
+      margin: 0;
+      font-size: 1rem;
+      color: #2d3748;
+      font-weight: 600;
+    }
+
+    .item-details {
+      color: #718096;
+      font-size: 0.85rem;
+      margin: 0.25rem 0 0 0;
+    }
+
+    .item-price {
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 1rem;
+    }
+
+    .order-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.5rem;
+      border-top: 2px solid #f7fafc;
+    }
+
+    .order-total {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #2d3748;
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-outline, .btn-primary {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      font-size: 0.9rem;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #e2e8f0;
+      color: #4a5568;
+    }
+
+    .btn-outline:hover {
+      background: #f7fafc;
+      border-color: #cbd5e0;
+    }
+
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: var(--shadow-light);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    /* Addresses */
+    .addresses-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .addresses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .address-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--shadow-light);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .address-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .address-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .address-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin: 0;
+    }
+
+    .address-badge {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .address-content p {
+      margin: 0.5rem 0;
+      color: #4a5568;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .address-actions {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    /* Security */
+    .security-form {
+      background: white;
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-light);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input {
+      padding: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    /* Empty States */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #718096;
+    }
+
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      color: #2d3748;
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+    }
+
+    .empty-state p {
+      margin: 0 0 2rem 0;
+      font-size: 1rem;
+    }
+
+    /* Modals */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-heavy);
+      animation: modalSlideIn 0.3s ease;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin: 0;
+    }
+
+    .close {
+      font-size: 2rem;
+      color: #718096;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .close:hover {
+      background: #f7fafc;
+      color: #2d3748;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .profile-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .profile-sidebar {
+        position: static;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .profile-wrapper {
+        padding: 1rem;
+      }
+
+      .profile-container {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-sidebar,
+      .profile-content {
+        padding: 1.5rem;
+      }
+
+      .content-title {
+        font-size: 1.75rem;
+      }
+
+      .data-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .addresses-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .order-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+      }
+
+      .order-actions {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profile-sidebar,
+      .profile-content {
+        padding: 1rem;
+      }
+
+      .content-title {
+        font-size: 1.5rem;
+      }
+
+      .data-card {
+        padding: 1.5rem;
+      }
+
+      .order-card,
+      .address-card {
+        padding: 1.5rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">⚡ TechStore</div>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="produtos.html">Produtos</a>
+      <a href="quemsomos.html">Quem Somos</a>
+      <a href="contato.html">Contato</a>
+      <a href="perfil.html" class="active">Perfil</a>
+      <button class="btn-logout" onclick="logout()">Sair</button>
+    </nav>
+  </header>
+
+  <div class="profile-wrapper">
+    <div class="profile-container">
+      <!-- Sidebar -->
+      <aside class="profile-sidebar">
+        <div class="profile-avatar">
+          <div class="avatar-container">
+            <div class="avatar-circle">
+              <span class="avatar-icon">👤</span>
+            </div>
+            <div class="avatar-edit" title="Alterar foto">
+              📷
+            </div>
+          </div>
+          <div class="profile-info">
+            <h2 id="perfil-usuario">Carregando...</h2>
+            <p id="perfil-email">carregando@email.com</p>
+          </div>
+        </div>
+
+        <div class="profile-stats">
+          <div class="stat-card">
+            <div class="stat-number" id="total-pedidos">0</div>
+            <div class="stat-label">Pedidos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="total-enderecos">0</div>
+            <div class="stat-label">Endereços</div>
+          </div>
+        </div>
+
+        <nav class="profile-nav">
+          <div class="nav-item active" onclick="mostrarSecao('dados')">
+            <span class="nav-icon">👤</span>
+            <span class="nav-text">Meus Dados</span>
+          </div>
+          <div class="nav-item" onclick="mostrarSecao('pedidos')">
+            <span class="nav-icon">📦</span>
+            <span class="nav-text">Meus Pedidos</span>
+          </div>
+          <div class="nav-item" onclick="mostrarSecao('enderecos')">
+            <span class="nav-icon">📍</span>
+            <span class="nav-text">Endereços</span>
+          </div>
+          <div class="nav-item" onclick="mostrarSecao('seguranca')">
+            <span class="nav-icon">🔒</span>
+            <span class="nav-text">Segurança</span>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="profile-content">
+        <!-- Seção Meus Dados -->
+        <section id="dados-section" class="profile-section active">
+          <div class="content-header">
+            <h1 class="content-title">👤 Meus Dados</h1>
+            <p class="content-subtitle">Gerencie suas informações pessoais e preferências</p>
+          </div>
+
+          <div class="data-grid">
+            <div class="data-card">
+              <div class="data-card-icon user">👤</div>
+              <div class="data-card-title">Nome Completo</div>
+              <div class="data-card-value" id="info-nome">Carregando...</div>
+            </div>
+
+            <div class="data-card">
+              <div class="data-card-icon user">🏷️</div>
+              <div class="data-card-title">Nome de Usuário</div>
+              <div class="data-card-value" id="info-username">Carregando...</div>
+            </div>
+
+            <div class="data-card">
+              <div class="data-card-icon email">📧</div>
+              <div class="data-card-title">E-mail</div>
+              <div class="data-card-value" id="info-email">Carregando...</div>
+            </div>
+
+            <div class="data-card">
+              <div class="data-card-icon phone">📱</div>
+              <div class="data-card-title">Telefone</div>
+              <div class="data-card-value" id="info-telefone">Carregando...</div>
+            </div>
+
+            <div class="data-card">
+              <div class="data-card-icon security">🆔</div>
+              <div class="data-card-title">CPF</div>
+              <div class="data-card-value" id="info-cpf">Carregando...</div>
+            </div>
+
+            <div class="data-card">
+              <div class="data-card-icon security">📅</div>
+              <div class="data-card-title">Data de Cadastro</div>
+              <div class="data-card-value" id="info-data">Carregando...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Seção Meus Pedidos -->
+        <section id="pedidos-section" class="profile-section">
+          <div class="content-header">
+            <h1 class="content-title">📦 Meus Pedidos</h1>
+            <p class="content-subtitle">Acompanhe o status e histórico dos seus pedidos</p>
+          </div>
+
+          <div class="orders-grid" id="lista-pedidos">
+            <!-- Pedidos serão carregados aqui -->
+          </div>
+        </section>
+
+        <!-- Seção Endereços -->
+        <section id="enderecos-section" class="profile-section">
+          <div class="content-header">
+            <h1 class="content-title">📍 Meus Endereços</h1>
+            <p class="content-subtitle">Gerencie os endereços para entrega</p>
+          </div>
+
+          <div class="addresses-header">
+            <div></div>
+            <button class="btn-primary" onclick="abrirModalNovoEndereco()">
+              + Novo Endereço
+            </button>
+          </div>
+
+          <div class="addresses-grid" id="lista-enderecos-perfil">
+            <!-- Endereços serão carregados aqui -->
+          </div>
+        </section>
+
+        <!-- Seção Segurança -->
+        <section id="seguranca-section" class="profile-section">
+          <div class="content-header">
+            <h1 class="content-title">🔒 Segurança</h1>
+            <p class="content-subtitle">Mantenha sua conta segura</p>
+          </div>
+
+          <div class="security-form">
+            <h3 style="margin-bottom: 1.5rem; color: #2d3748;">Alterar Senha</h3>
+            <form id="form-senha">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="senha-atual">Senha Atual *</label>
+                  <input type="password" id="senha-atual" required placeholder="Digite sua senha atual">
+                </div>
+                <div class="form-group">
+                  <label for="nova-senha">Nova Senha *</label>
+                  <input type="password" id="nova-senha" required minlength="6" placeholder="Mínimo 6 caracteres">
+                </div>
+                <div class="form-group">
+                  <label for="confirmar-senha">Confirmar Nova Senha *</label>
+                  <input type="password" id="confirmar-senha" required minlength="6" placeholder="Repita a nova senha">
+                </div>
+              </div>
+              <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem;">Alterar Senha</button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal Novo Endereço -->
+  <div id="modal-novo-endereco" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Adicionar Endereço</h2>
+        <span class="close" onclick="fecharModalNovoEndereco()">&times;</span>
+      </div>
+
+      <form id="form-novo-endereco">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group">
+            <label for="cep">CEP *</label>
+            <input type="text" id="cep" required onblur="buscarCEP()" placeholder="00000-000">
+          </div>
+          <div class="form-group">
+            <label for="apelido">Apelido</label>
+            <input type="text" id="apelido" placeholder="Casa, Trabalho...">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label for="logradouro">Rua *</label>
+          <input type="text" id="logradouro" required placeholder="Nome da rua">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group">
+            <label for="numero">Número *</label>
+            <input type="text" id="numero" required placeholder="123">
+          </div>
+          <div class="form-group">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento" placeholder="Apto, bloco...">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label for="bairro">Bairro *</label>
+          <input type="text" id="bairro" required placeholder="Nome do bairro">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group">
+            <label for="localidade">Cidade *</label>
+            <input type="text" id="localidade" required placeholder="Nome da cidade">
+          </div>
+          <div class="form-group">
+            <label for="uf">Estado *</label>
+            <input type="text" id="uf" required maxlength="2" placeholder="UF">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+            <input type="checkbox" id="is_principal" style="width: auto;">
+            <span>Definir como endereço principal</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem;">Salvar Endereço</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

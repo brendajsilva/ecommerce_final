@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quem Somos | TechStore</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">⚡ TechStore</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="produtos.html">Produtos</a></li>
+        <li><a href="quemsomos.html" class="active">Quem Somos</a></li>
+        <li><a href="contato.html">Contato</a></li>
+        <li><a href="suporte.html">Suporte</a></li>
+        <li><a href="perfil.html">Perfil</a></li>
+        <li><button class="btn-logout" onclick="logout()">Sair</button></li>
+      </ul>
+      <div class="cart-icon" onclick="window.location.href='carrinho.html'">
+        🛒 <span id="cart-count">0</span>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="fade-in">
+      <h1 style="text-align: center; margin-bottom: 2rem;">Quem Somos</h1>
+
+      <div class="about-content">
+        <section class="about-section">
+          <h2>Nossa História</h2>
+          <p>
+            A TechStore nasceu da paixão por tecnologia e inovação. Fundada em 2020, nossa missão é trazer os melhores produtos tecnológicos
+            para o mercado brasileiro, oferecendo qualidade, preços competitivos e um atendimento excepcional aos nossos clientes.
+          </p>
+        </section>
+
+        <section class="about-section">
+          <h2>Nossa Missão</h2>
+          <p>
+            Democratizar o acesso à tecnologia de ponta, oferecendo produtos de alta qualidade com preços acessíveis,
+            garantindo satisfação total aos nossos clientes através de um serviço personalizado e eficiente.
+          </p>
+        </section>
+
+        <section class="about-section">
+          <h2>Nossos Valores</h2>
+          <ul class="values-list">
+            <li><strong>Inovação:</strong> Sempre buscando as últimas tendências tecnológicas</li>
+            <li><strong>Qualidade:</strong> Produtos certificados e testados</li>
+            <li><strong>Transparência:</strong> Preços claros e informações precisas</li>
+            <li><strong>Atendimento:</strong> Suporte dedicado e personalizado</li>
+            <li><strong>Sustentabilidade:</strong> Compromisso com práticas ambientais responsáveis</li>
+          </ul>
+        </section>
+
+        <section class="about-section">
+          <h2>Por que escolher a TechStore?</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <h3>🚚 Entrega Rápida</h3>
+              <p>Entregamos em todo o Brasil com prazos otimizados</p>
+            </div>
+            <div class="feature-card">
+              <h3>🔒 Garantia</h3>
+              <p>Garantia oficial em todos os produtos</p>
+            </div>
+            <div class="feature-card">
+              <h3>💳 Pagamento Seguro</h3>
+              <p>Múltiplas formas de pagamento com total segurança</p>
+            </div>
+            <div class="feature-card">
+              <h3>📞 Suporte 24/7</h3>
+              <p>Atendimento disponível sempre que precisar</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
