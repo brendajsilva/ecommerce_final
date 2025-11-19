@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suporte | MotoStore</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">🏍️ MotoStore</div>
+      <ul class="nav-links">
+        <li><a href="../index.html">Início</a></li>
+        <li><a href="produtos.html">Produtos</a></li>
+        <li><a href="quemsomos.html">Quem Somos</a></li>
+        <li><a href="contato.html">Contato</a></li>
+        <li><a href="suporte.html" class="active">Suporte</a></li>
+        <li><a href="perfil.html">Perfil</a></li>
+        <li><button class="btn-logout" onclick="logout()">Sair</button></li>
+      </ul>
+      <div class="cart-icon" onclick="window.location.href='carrinho.html'">
+        🛒 <span id="cart-count">0</span>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="fade-in">
+      <h1 style="text-align: center; margin-bottom: 2rem;">Central de Suporte</h1>
+
+      <div class="support-content">
+        <div class="support-grid">
+          <div class="support-card">
+            <h3>📦 Rastreamento de Pedidos</h3>
+            <p>Acompanhe seu pedido em tempo real</p>
+            <a href="perfil.html" class="btn-secondary">Ver Pedidos</a>
+          </div>
+
+          <div class="support-card">
+            <h3>🔄 Trocas e Devoluções</h3>
+            <p>Política de trocas e devoluções</p>
+            <a href="contato.html" class="btn-secondary">Falar com Suporte</a>
+          </div>
+
+          <div class="support-card">
+            <h3>💳 Problemas de Pagamento</h3>
+            <p>Dúvidas sobre pagamentos e reembolsos</p>
+            <a href="contato.html" class="btn-secondary">Suporte Financeiro</a>
+          </div>
+
+          <div class="support-card">
+            <h3>🛠️ Assistência Técnica</h3>
+            <p>Ajuda com instalação e manutenção</p>
+            <a href="contato.html" class="btn-secondary">Falar com Técnico</a>
+          </div>
+        </div>
+
+        <div class="faq-section">
+          <h2>Perguntas Frequentes</h2>
+          <div class="faq-item">
+            <h3>Quanto tempo leva para entregar?</h3>
+            <p>Entregamos em até 7 dias úteis para capitais e 15 dias para outras regiões.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Posso trocar meu produto?</h3>
+            <p>Sim, aceitamos trocas em até 30 dias com nota fiscal e produto em perfeito estado.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Como funciona o frete?</h3>
+            <p>Frete grátis para compras acima de R$ 299. Para valores menores, calculamos automaticamente.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Quais formas de pagamento?</h3>
+            <p>Aceitamos cartão de crédito, débito, PIX, boleto e transferência bancária.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

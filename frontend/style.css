@@ -1,13 +1,13 @@
 /* ===== VARIÁVEIS E RESET ===== */
 :root {
-  --primary: #00aaff;
-  --primary-dark: #0088cc;
-  --secondary: #161b22;
-  --accent: #ff4d4d;
+  --primary: #ff0000;
+  --primary-dark: #cc0000;
+  --secondary: #000000;
+  --accent: #ff6600;
   --text: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.7);
-  --bg-dark: #0d1421;
-  --bg-card: rgba(22, 27, 34, 0.9);
+  --bg-dark: #0d0d0d;
+  --bg-card: rgba(0, 0, 0, 0.9);
   --border: #333;
   --success: #00cc66;
 }
