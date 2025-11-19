@@ -1,4 +1,4 @@
-d // ========================
+// ========================
 // Sistema de Autenticação
 // ========================
 
@@ -1377,7 +1377,7 @@ async function login(event) {
             localStorage.setItem('authToken', data.token);
             localStorage.setItem('userLogado', JSON.stringify(data.user));
             mostrarMensagem(`Bem-vindo, ${usuario}!`);
-            setTimeout(() => window.location.href = "index.html", 1000);
+            setTimeout(() => window.location.href = "../index.html", 1000);
         } else {
             mostrarMensagem(data.error || "Erro no login", 'error');
         }
